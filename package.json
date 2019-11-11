@@ -1,0 +1,19 @@
+{
+  "name": "rn-webview-rte",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jzyds/rn-webview-rte.git"
+  },
+  "author": "jzyds",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jzyds/rn-webview-rte/issues"
+  },
+  "homepage": "https://github.com/jzyds/rn-webview-rte#readme"
+}
