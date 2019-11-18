@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {WebView} from 'react-native-webview';
+import {Platform} from 'react-native';
 
 class RTEWebview extends Component {
   static defaultProps = {
-    onEditorLoaded: () => { },
-    placeholder: "Compose an epic..."
+    onEditorLoaded: () => {},
+    placeholder: 'Compose an epic...',
   };
 
   htmlContent = '';
@@ -42,28 +43,26 @@ class RTEWebview extends Component {
 
   insertImage (url) {
     this.sendJSEvent (
-      `window.insertImage('${url}', ${this.getSelectionIndex()})`
+      `window.insertImage('${url}', ${this.getSelectionIndex ()})`
     );
   }
 
   insertVideo (url) {
     this.sendJSEvent (
-      `window.insertVideo('${url}', ${this.getSelectionIndex()})`
+      `window.insertVideo('${url}', ${this.getSelectionIndex ()})`
     );
   }
 
-  sendJSEvent = (script_str) => {
+  sendJSEvent = script_str => {
     this.web_ref.injectJavaScript (script_str);
-  }
+  };
 
   onMessage = event => {
     let data = JSON.parse (event.nativeEvent.data);
     switch (data.type) {
       case 'onEditorLoaded':
-        this.props.onEditorLoaded();
-        this.sendJSEvent(
-          `window.setPlaceholder('${this.props.placeholder}')`
-        );
+        this.props.onEditorLoaded ();
+        this.sendJSEvent (`window.setPlaceholder('${this.props.placeholder}')`);
         break;
       case 'updateHtmlContent':
         this.htmlContent = data.htmlContent;
@@ -79,7 +78,7 @@ class RTEWebview extends Component {
     this.sendJSEvent (`window.resetContent('${content}')`);
   };
 
-  componentDidMount() {
+  componentDidMount () {
     let {initialContentHTML} = this.props;
     if (!!initialContentHTML) {
       this.resetContent (initialContentHTML);
@@ -90,11 +89,16 @@ class RTEWebview extends Component {
     return (
       <WebView
         ref={r => (this.web_ref = r)}
+        allowFileAccess={true}
         style={{flex: 1}}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         originWhitelist={['*']}
-        source={require ('./static/editor.html')}
+        source={
+          Platform.OS === 'ios'
+            ? require ('./static/editor.html')
+            : {uri: 'file:///android_asset/editor.html'}
+        }
         onMessage={this.onMessage}
       />
     );

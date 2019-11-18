@@ -1,0 +1,14 @@
+ext {
+ copyEditorHtmlToAppAssets = { dir ->
+    def fromF = new File(dir, '/static/editor.html');
+    def toF = new File(projectDir, '/src/main/assets/');
+    println ('Copying html asset file from ' + fromF.toString() + ' to ' + toF.toString());
+
+    copy  {
+      from fromF
+      into toF
+    }
+  }
+
+  copyEditorHtmlToAppAssets(file('../../node_modules/rn-webview-rte'))
+}
