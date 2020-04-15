@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {WebView} from 'react-native-webview';
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
+import { WebView } from 'react-native-webview';
 
 class RTEWebview extends Component {
   static defaultProps = {
@@ -47,9 +47,9 @@ class RTEWebview extends Component {
     );
   }
 
-  insertVideo (url) {
+  insertVideo (url, poster) {
     this.sendJSEvent (
-      `window.insertVideo('${url}', ${this.getSelectionIndex ()})`
+      `window.insertVideo('${url}', '${poster}', ${this.getSelectionIndex ()})`
     );
   }
 

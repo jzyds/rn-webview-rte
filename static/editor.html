@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <style>
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <!-- <style>
     /*!
  * Quill Editor v1.3.6
  * https://quilljs.com/
@@ -402,7 +403,7 @@
   position: absolute;
   right: 15px;
 }
-  </style>
+  </style> -->
   <title>Document</title>
   <style>
     * {
@@ -424,6 +425,7 @@
   </style>
 </head>
 <body>
+
   <div id="editor"></div>
   
   <script>  
@@ -507,7 +509,11 @@
     Quill.register(VideoBlot)
 
     var quill = new Quill('#editor', {
-      placeholder: ''
+      placeholder: '',
+      modules: {
+        toolbar: true
+      },
+       theme: 'snow'
     });
     
     window.ReactNativeWebView.postMessage(JSON.stringify({
@@ -531,14 +537,18 @@
       quill.clipboard.dangerouslyPasteHTML(parseInt(_i), `<img src=${url} width='100%'>`)
     }
 
-    window.insertVideo = function(url, index) {
+    window.insertVideo = function(url, poster, index) {
       var _i = index >= 0 ? index : quill.getLength();
-      quill.insertEmbed(_i, 'simpleVideo', {
+      let param = {
         url: url,
         controls: 'controls',
         width: '100%',
         height: '200px'
-      })
+      }
+      if(!!poster) {
+        param.poster = poster
+      }
+      quill.insertEmbed(_i, 'simpleVideo', param)
     }
 
     window.getContentSelection = function() {
