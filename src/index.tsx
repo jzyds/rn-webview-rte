@@ -102,7 +102,7 @@ class RTEWebview extends Component {
         allowsInlineMediaPlayback={true}
         source={
           Platform.OS === 'ios'
-            ? require('./static/editor.html')
+            ? require('../static/editor.html')
             : { uri: 'file:///android_asset/editor.html' }
         }
         onMessage={this.onMessage}
