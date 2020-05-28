@@ -28,7 +28,7 @@ class RTEWebview extends Component {
 
   getContentHtml () {
     this.sendJSEvent(`window.getContentHtml()`)
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         console.log(this.htmlContent)
         resolve(this.htmlContent)
