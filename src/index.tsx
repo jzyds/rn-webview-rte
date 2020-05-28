@@ -100,6 +100,7 @@ class RTEWebview extends Component {
         allowsLinkPreview={false}
         bounces={false}
         allowsInlineMediaPlayback={true}
+        scrollEnabled={false}
         source={
           Platform.OS === 'ios'
             ? require('../static/editor.html')
