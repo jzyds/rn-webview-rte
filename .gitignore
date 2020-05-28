@@ -34,7 +34,7 @@ local.properties
 
 # node.js
 #
-node_modules/
+node_modules
 npm-debug.log
 yarn-error.log
 
@@ -43,4 +43,4 @@ yarn-error.log
 .vscode
 
 package-lock.json
-example/
+example
