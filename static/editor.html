@@ -2800,7 +2800,7 @@
         value: function create(data) {
           var node = _get(_getPrototypeOf(ImageBlot), "create", this).call(this, data);
           node.setAttribute('src', data.src);
-          node.setAttribute('style', "max-width: 100%");
+          node.setAttribute('style', "max-width: 100%; display: block");
           return node;
         }
       }, {
@@ -2883,7 +2883,7 @@
         type: "updateContentSelection",
         range: quill.getSelection()
       }));
-      
+
       quill.blur()
     }
 
