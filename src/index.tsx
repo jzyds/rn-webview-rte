@@ -5,7 +5,8 @@ import { WebView } from 'react-native-webview'
 class RTEWebview extends Component {
   static defaultProps = {
     onEditorLoaded: () => {},
-    placeholder: 'Compose an epic...'
+    placeholder: 'Compose an epic...',
+    source: void 0
   }
 
   htmlContent = ''
@@ -28,7 +29,7 @@ class RTEWebview extends Component {
 
   getContentHtml () {
     this.sendJSEvent(`window.getContentHtml()`)
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         console.log(this.htmlContent)
         resolve(this.htmlContent)
@@ -37,7 +38,7 @@ class RTEWebview extends Component {
   }
 
   getSelectionIndex () {
-    let { contentSelection } : any = this
+    let { contentSelection }: any = this
     return !!contentSelection && !!contentSelection.index
       ? contentSelection.index
       : -1
@@ -88,6 +89,14 @@ class RTEWebview extends Component {
   }
 
   render () {
+    let { source } = this.props
+    if (!source) {
+      source =
+        Platform.OS === 'ios'
+          ? require('../static/editor.html')
+          : { uri: 'file:///android_asset/editor.html' }
+    }
+
     return (
       <WebView
         ref={r => (this.web_ref = r)}
@@ -101,11 +110,7 @@ class RTEWebview extends Component {
         bounces={false}
         allowsInlineMediaPlayback={true}
         scrollEnabled={false}
-        source={
-          Platform.OS === 'ios'
-            ? require('../static/editor.html')
-            : { uri: 'file:///android_asset/editor.html' }
-        }
+        source={source}
         onMessage={this.onMessage}
       />
     )
