@@ -2878,10 +2878,13 @@
     }
 
     window.getContentSelection = function () {
+
       window.ReactNativeWebView.postMessage(JSON.stringify({
         type: "updateContentSelection",
         range: quill.getSelection()
       }));
+      
+      quill.blur()
     }
 
     window.resetContent = function (content) {
