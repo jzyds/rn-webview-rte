@@ -3,6 +3,7 @@ declare class RTEWebview extends Component {
     static defaultProps: {
         onEditorLoaded: () => void;
         placeholder: string;
+        source: undefined;
     };
     htmlContent: string;
     contentSelection: undefined;
