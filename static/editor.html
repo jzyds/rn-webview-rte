@@ -2831,6 +2831,13 @@
     });
 
     quill.on('text-change', function (delta, oldDelta, source) {
+      var limit = 1000;
+
+      if (quill.getLength() > limit) {
+        quill.deleteText(limit, quill.getLength());
+        return;
+      }
+
       var quillContainer = document.getElementById('quill-container');
       var imgDoms = quillContainer.getElementsByTagName('img');
 

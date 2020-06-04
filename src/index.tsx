@@ -63,12 +63,16 @@ class RTEWebview extends Component {
     this.web_ref.injectJavaScript(script_str)
   }
 
+  setPlaceholder = () => {
+    this.sendJSEvent(`window.setPlaceholder('${this.props.placeholder}')`)
+  }
+
   onMessage = event => {
     let data = JSON.parse(event.nativeEvent.data)
     switch (data.type) {
       case 'onEditorLoaded':
-        this.props.onEditorLoaded()
-        this.sendJSEvent(`window.setPlaceholder('${this.props.placeholder}')`)
+        this.props.onEditorLoaded();
+        this.setPlaceholder()
         break
       case 'updateHtmlContent':
         this.htmlContent = data.htmlContent

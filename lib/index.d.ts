@@ -19,6 +19,7 @@ declare class RTEWebview extends Component {
     insertImage(url: any): void;
     insertVideo(url: any, poster: any): void;
     sendJSEvent: (script_str: any) => void;
+    setPlaceholder: () => void;
     onMessage: (event: any) => void;
     resetContent: (content: any) => void;
     componentDidMount(): void;
