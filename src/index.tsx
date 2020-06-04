@@ -6,7 +6,10 @@ class RTEWebview extends Component {
   static defaultProps = {
     onEditorLoaded: () => {},
     placeholder: 'Compose an epic...',
-    source: void 0
+    source: void 0,
+    onTextChange: () => {},
+    onSelectionChange: () => {},
+    onEditorChange: () => {}
   }
 
   htmlContent = ''
@@ -72,6 +75,11 @@ class RTEWebview extends Component {
         break
       case 'updateContentSelection':
         this.contentSelection = data.range
+        break
+      case 'onTextChange':
+      case 'onSelectionChange':
+      case 'onEditorChange':
+        this.props[data.type](data)
         break
       default:
     }

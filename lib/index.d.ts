@@ -4,6 +4,9 @@ declare class RTEWebview extends Component {
         onEditorLoaded: () => void;
         placeholder: string;
         source: undefined;
+        onTextChange: () => void;
+        onSelectionChange: () => void;
+        onEditorChange: () => void;
     };
     htmlContent: string;
     contentSelection: undefined;

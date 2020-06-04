@@ -2830,6 +2830,37 @@
       scrollingContainer: '#scrolling-container'
     });
 
+    quill.on('text-change', function (delta, oldDelta, source) {
+      var quillContainer = document.getElementById('quill-container');
+      var imgDoms = quillContainer.getElementsByTagName('img');
+
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "onTextChange",
+        delta,
+        oldDelta,
+        source,
+        length: quill.getLength(),
+        text: quill.getText(),
+        insertedImageNumber: !!imgDoms ? imgDoms.length : 0
+      }));
+    });
+
+    quill.on('selection-change', function (range, oldRange, source) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "onSelectionChange",
+        range,
+        oldRange,
+        source
+      }));
+    });
+
+    quill.on('editor-change', function (eventName) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "onEditorChange",
+        eventName
+      }));
+    });
+
     window.ReactNativeWebView.postMessage(JSON.stringify({
       type: "onEditorLoaded"
     }));
