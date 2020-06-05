@@ -117,7 +117,7 @@ class RTEWebview extends Component {
         javaScriptEnabled={true}
         domStorageEnabled={true}
         originWhitelist={['*']}
-        hideKeyboardAccessoryView={true}
+        hideKeyboardAccessoryView={false}
         allowsLinkPreview={false}
         bounces={false}
         allowsInlineMediaPlayback={true}
