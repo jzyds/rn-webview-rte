@@ -108,8 +108,7 @@ class RTEWebview extends Component {
   }
 
   _keyboardDidShow(): any {
-    console.log(this.sendJSEvent)
-    // this.sendJSEvent(`window.quillFocus(${this.getSelectionIndex()})`);
+    this.sendJSEvent(`window.quillFocus(${this.getSelectionIndex()})`);
   }
 
   render () {
