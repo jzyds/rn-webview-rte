@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Platform } from 'react-native'
+import { Platform, Keyboard } from 'react-native'
 import { WebView } from 'react-native-webview'
 
 class RTEWebview extends Component {
@@ -16,6 +16,7 @@ class RTEWebview extends Component {
   contentSelection = void 0
   web_ref: any
   props: any
+  keyboardDidShowListener: any
 
   updateContentSelection () {
     this.sendJSEvent(`window.getContentSelection()`)
@@ -98,6 +99,17 @@ class RTEWebview extends Component {
     if (!!initialContentHTML) {
       this.resetContent(initialContentHTML)
     }
+
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+  }
+
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+  }
+
+  _keyboardDidShow(): any {
+    console.log(this.sendJSEvent)
+    // this.sendJSEvent(`window.quillFocus(${this.getSelectionIndex()})`);
   }
 
   render () {
@@ -112,6 +124,7 @@ class RTEWebview extends Component {
     return (
       <WebView
         ref={r => (this.web_ref = r)}
+        keyboardDisplayRequiresUserAction={true}
         allowFileAccess={true}
         style={{ flex: 1 }}
         javaScriptEnabled={true}

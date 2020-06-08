@@ -1149,8 +1149,16 @@
               }
             }, {
               key: 'scrollIntoView', value: function scrollIntoView(scrollingContainer) {
-                var range = this.lastRange; if (range == null) return; var bounds = this.getBounds(range.index, range.length); if (bounds == null) return; var limit = this.scroll.length() - 1; var _scroll$line = this.scroll.line(Math.min(range.index, limit)), _scroll$line2 = _slicedToArray(_scroll$line, 1), first = _scroll$line2[0]; var last = first; if (range.length > 0) { var _scroll$line3 = this.scroll.line(Math.min(range.index + range.length, limit)); var _scroll$line4 = _slicedToArray(_scroll$line3, 1); last = _scroll$line4[0]; }
-                if (first == null || last == null) return; var scrollBounds = scrollingContainer.getBoundingClientRect(); if (bounds.top < scrollBounds.top) { scrollingContainer.scrollTop -= scrollBounds.top - bounds.top; } else if (bounds.bottom > scrollBounds.bottom) { scrollingContainer.scrollTop += bounds.bottom - scrollBounds.bottom; }
+                var range = this.lastRange; if (range == null) return;
+                var bounds = this.getBounds(range.index, range.length);
+                if (bounds == null) return;
+                var limit = this.scroll.length() - 1;
+                var _scroll$line = this.scroll.line(Math.min(range.index, limit)), _scroll$line2 = _slicedToArray(_scroll$line, 1), first = _scroll$line2[0]; var last = first; if (range.length > 0) { var _scroll$line3 = this.scroll.line(Math.min(range.index + range.length, limit)); var _scroll$line4 = _slicedToArray(_scroll$line3, 1); last = _scroll$line4[0]; }
+                if (first == null || last == null) return;
+                var scrollBounds = scrollingContainer.getBoundingClientRect();
+                if (bounds.top < scrollBounds.top) {
+                  scrollingContainer.scrollTop -= scrollBounds.top - bounds.top;
+                } else if (bounds.bottom > scrollBounds.bottom) { scrollingContainer.scrollTop += bounds.bottom - scrollBounds.bottom; }
               }
             }, {
               key: 'setNativeRange', value: function setNativeRange(startNode, startOffset) {
@@ -2883,6 +2891,10 @@
       }));
     }
 
+    window.quillFocus = function (index) {
+      quill.focus();
+    }
+
     window.insertImage = function (url, index) {
       var quillLength = quill.getLength();
       // https://quilljs.com/docs/api/#getlength
@@ -2897,6 +2909,10 @@
         src: url
       })
       quill.setSelection(_i + 1);
+
+      setTimeout(() => {
+        quill.focus();
+      }, 500)
     }
 
     window.insertVideo = function (url, poster, index) {
