@@ -2767,7 +2767,7 @@
             node.setAttribute('width', value.width);
             node.setAttribute('height', value.height);
             node.setAttribute('poster', value.poster);
-            node.setAttribute('style', "background:#000000");
+            node.setAttribute('style', "background:#000000; display:block;");
             node.setAttribute('webkit-playsinline', true);
             node.setAttribute('playsinline', true);
             node.setAttribute('x5-playsinline', true);
@@ -2905,14 +2905,18 @@
       var initLenth = quillLength === 1 ? 0 : quillLength;
 
       var _i = (index >= 0) ? index : initLenth;
+      
       quill.insertEmbed(_i, 'imageBlot', {
         src: url
       })
-      quill.setSelection(_i + 1);
+
+      quill.insertText(_i + 1, "\n")
+      
+      quill.setSelection(_i + 2);
 
       setTimeout(() => {
         quill.focus();
-      }, 500)
+      }, 200)
     }
 
     window.insertVideo = function (url, poster, index) {
@@ -2931,12 +2935,10 @@
     }
 
     window.getContentSelection = function () {
-
       window.ReactNativeWebView.postMessage(JSON.stringify({
         type: "updateContentSelection",
         range: quill.getSelection()
       }));
-
       quill.blur()
     }
 
