@@ -12,6 +12,7 @@ declare class RTEWebview extends Component {
     contentSelection: undefined;
     web_ref: any;
     props: any;
+    keyboardWillShowListener: any;
     keyboardDidShowListener: any;
     updateContentSelection(): void;
     getContentSelection(): Promise<unknown>;
@@ -25,7 +26,9 @@ declare class RTEWebview extends Component {
     resetContent: (content: any) => void;
     componentDidMount(): void;
     componentWillUnmount(): void;
-    _keyboardDidShow(): any;
+    keyboardWillShow: () => void;
+    keyboardDidShow: () => any;
+    quillFocus: () => any;
     render(): any;
 }
 export default RTEWebview;

@@ -16,6 +16,7 @@ class RTEWebview extends Component {
   contentSelection = void 0
   web_ref: any
   props: any
+  keyboardWillShowListener: any
   keyboardDidShowListener: any
 
   updateContentSelection () {
@@ -61,7 +62,7 @@ class RTEWebview extends Component {
   }
 
   sendJSEvent = script_str => {
-    this.web_ref.injectJavaScript(script_str)
+    !!this.web_ref && !!this.web_ref.injectJavaScript && this.web_ref.injectJavaScript(script_str)
   }
 
   setPlaceholder = () => {
@@ -72,7 +73,7 @@ class RTEWebview extends Component {
     let data = JSON.parse(event.nativeEvent.data)
     switch (data.type) {
       case 'onEditorLoaded':
-        this.props.onEditorLoaded();
+        this.props.onEditorLoaded()
         this.setPlaceholder()
         break
       case 'updateHtmlContent':
@@ -100,15 +101,31 @@ class RTEWebview extends Component {
       this.resetContent(initialContentHTML)
     }
 
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.keyboardWillShowListener = Keyboard.addListener(
+      'keyboardWillShow',
+      this.keyboardWillShow
+    )
+    this.keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      this.keyboardDidShow
+    )
   }
 
   componentWillUnmount () {
-    this.keyboardDidShowListener.remove();
+    this.keyboardWillShowListener.remove()
+    this.keyboardDidShowListener.remove()
   }
 
-  _keyboardDidShow(): any {
-    this.sendJSEvent(`window.quillFocus(${this.getSelectionIndex()})`);
+  keyboardWillShow = () => {
+    setTimeout(() => {
+      this.quillFocus()
+    }, 200)
+  }
+
+  keyboardDidShow = () => this.quillFocus()
+
+  quillFocus = (): any => {
+    this.sendJSEvent(`window.quillFocus(${this.getSelectionIndex()})`)
   }
 
   render () {
@@ -123,7 +140,7 @@ class RTEWebview extends Component {
     return (
       <WebView
         ref={r => (this.web_ref = r)}
-        keyboardDisplayRequiresUserAction={true}
+        keyboardDisplayRequiresUserAction={false}
         allowFileAccess={true}
         style={{ flex: 1 }}
         javaScriptEnabled={true}
