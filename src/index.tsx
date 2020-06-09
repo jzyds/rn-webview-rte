@@ -43,10 +43,10 @@ class RTEWebview extends Component {
   }
 
   getSelectionIndex () {
-    let { contentSelection }: any = this
-    return !!contentSelection && !!contentSelection.index
-      ? contentSelection.index
-      : -1
+    let { contentSelection } : any = this;
+    return !!contentSelection && contentSelection.hasOwnProperty("index")
+        ? contentSelection.index
+        : -1;
   }
 
   insertImage (url) {

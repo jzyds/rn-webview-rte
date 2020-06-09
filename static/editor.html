@@ -2904,8 +2904,9 @@
       // so getLength will return 1.
       var initLenth = quillLength === 1 ? 0 : quillLength;
 
+      // 没有focus的情况下 index 为 -1
       var _i = (index >= 0) ? index : initLenth;
-      
+
       quill.insertEmbed(_i, 'imageBlot', {
         src: url
       })
