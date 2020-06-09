@@ -19,7 +19,7 @@
     .ql-container {
       box-sizing: border-box;
       font-family: Helvetica, Arial, sans-serif;
-      font-size: 13px;
+      font-size: 12px;
       height: 100%;
       margin: 0px;
       position: relative;
@@ -508,16 +508,6 @@
     .ql-editor .ql-align-right {
       text-align: right;
     }
-
-    .ql-editor.ql-blank::before {
-      color: rgba(0, 0, 0, 0.6);
-      content: attr(data-placeholder);
-      font-style: italic;
-      left: 15px;
-      pointer-events: none;
-      position: absolute;
-      right: 15px;
-    }
   </style>
 
   <style>
@@ -538,7 +528,9 @@
 
     #quill-container .ql-editor {
       font-size: 16px;
+      line-height: 26px;
       overflow-y: visible;
+      color: #444857;
     }
 
     /* Specify our own scrolling container */
@@ -555,8 +547,8 @@
     .ql-editor.ql-blank::before {
       color: rgba(0, 0, 0, 0.6);
       content: attr(data-placeholder);
-      font-style: italic;
-      left: 10px;
+      /* font-style: italic; */
+      left: 15px;
       pointer-events: none;
       position: absolute;
       right: 15px;
@@ -2718,6 +2710,12 @@
   </script>
 
   <script>
+    if (typeof String.prototype.endsWith !== 'function') {
+      String.prototype.endsWith = function (suffix) {
+        return this.indexOf(suffix, this.length - suffix.length) !== -1;
+      };
+    }
+
     var BlockEmbed = Quill.import('blots/block/embed');
 
     function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return !!right[Symbol.hasInstance](left); } else { return left instanceof right; } }
@@ -2808,7 +2806,7 @@
         value: function create(data) {
           var node = _get(_getPrototypeOf(ImageBlot), "create", this).call(this, data);
           node.setAttribute('src', data.src);
-          node.setAttribute('style', "max-width: 100%; display: block");
+          node.setAttribute('style', "max-width: 100%; display: block; margin-top: 20px; margin-bottom: 20px");
           return node;
         }
       }, {
@@ -2907,12 +2905,46 @@
       // 没有focus的情况下 index 为 -1
       var _i = (index >= 0) ? index : initLenth;
 
+      var selection_after = 1;
+
+      var delta = quill.getContents();
+      if (!!delta.ops) {
+        var ops = delta.ops;
+        if (!!ops.length) {
+          var insert = ops[ops.length - 1].insert;
+          if (
+           (insert !== void 0) && 
+           typeof insert === "string" &&
+           !insert.endsWith("\n\n")
+          ) {
+            selection_after = 2
+          }
+        }
+      }
+
+      // window.ReactNativeWebView.postMessage(JSON.stringify({
+      //   type: "onSelectionChange",
+      //   delta,
+      //   insert,
+      //   selection_after,
+      //   _i,
+      //   quillLength,
+      //   custom: 'asdsadasdasdas'
+      // }));
+
       quill.insertEmbed(_i, 'imageBlot', {
         src: url
       })
 
-      // quill.insertText(_i + 1, "\n")
-      quill.setSelection(_i + 2);
+      if(_i === 0) {
+        selection_after = 1
+      } 
+
+      if(_i + 1 < quillLength) {
+        selection_after = 1
+      }
+
+      quill.setSelection(_i + selection_after);
 
       setTimeout(() => {
         quill.focus();
