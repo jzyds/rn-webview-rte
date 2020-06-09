@@ -2944,11 +2944,14 @@
         selection_after = 1
       }
 
-      quill.setSelection(_i + selection_after);
 
-      setTimeout(() => {
-        quill.focus();
+      setTimeout(function(){
+        quill.setSelection(_i + selection_after);
       }, 200)
+
+      // setTimeout(() => {
+      //   quill.focus();
+      // }, 500)
     }
 
     window.insertVideo = function (url, poster, index) {
