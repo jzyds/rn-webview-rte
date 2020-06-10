@@ -2980,6 +2980,10 @@
     window.resetContent = function (content) {
       quill.clipboard.dangerouslyPasteHTML(content);
     }
+  
+    document.getElementById('quill-container').addEventListener('click', function () {
+      quill.focus();
+    })
   </script>
 </body>
 
