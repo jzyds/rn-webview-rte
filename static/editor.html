@@ -2954,20 +2954,20 @@
       // }, 500)
     }
 
-    window.insertVideo = function (url, poster, index) {
-      var _i = index >= 0 ? index : quill.getLength();
-      let param = {
-        url: url,
-        controls: 'controls',
-        width: '100%',
-        height: '200px'
-      }
-      if (!!poster) {
-        param.poster = poster
-      }
-      quill.insertEmbed(_i, 'simpleVideo', param)
-      quill.setSelection(_i + 1);
-    }
+    // window.insertVideo = function (url, poster, index) {
+    //   var _i = index >= 0 ? index : quill.getLength();
+    //   let param = {
+    //     url: url,
+    //     controls: 'controls',
+    //     width: '100%',
+    //     height: '200px'
+    //   }
+    //   if (!!poster) {
+    //     param.poster = poster
+    //   }
+    //   quill.insertEmbed(_i, 'simpleVideo', param)
+    //   quill.setSelection(_i + 1);
+    // }
 
     window.getContentSelection = function () {
       window.ReactNativeWebView.postMessage(JSON.stringify({
